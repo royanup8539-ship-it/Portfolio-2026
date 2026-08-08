@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Metallurgy Engineering fresher portfolio - MATLAB internship training." />
+  <title>Metallurgy Engineering Portfolio</title>
+  <style>
+    :root{
+      --bg:#0a0d12;
+      --bg2:#15100c;
+      --panel:#141922;
+      --panel2:#1c1510;
+      --text:#f3f6f8;
+      --muted:#b8c0c8;
+      --line:rgba(255,255,255,.10);
+      --orange:#ff8a3d;
+      --gold:#f5c451;
+      --steel:#8da0b3;
+      --cyan:#67d9e8;
+      --green:#75d39b;
+      --shadow:0 20px 60px rgba(0,0,0,.28);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--text);
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:
+        radial-gradient(circle at 15% 8%, rgba(255,138,61,.11), transparent 25%),
+        radial-gradient(circle at 90% 15%, rgba(103,217,232,.09), transparent 24%),
+        linear-gradient(160deg,var(--bg),#10151d 45%,var(--bg2));
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.16;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+      background-size:38px 38px;
+      mask-image:linear-gradient(to bottom,black,transparent 90%);
+    }
+
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(1160px,92vw);margin:auto}
+
+    .nav{
+      position:sticky;top:0;z-index:50;
+      backdrop-filter:blur(16px);
+      background:rgba(8,11,16,.78);
+      border-bottom:1px solid var(--line);
+    }
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:14px 0}
+    .brand{font-weight:900;letter-spacing:.7px}
+    .brand span{color:var(--orange)}
+    .nav-links{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:.92rem}
+    .nav-links a:hover{color:var(--text)}
+
+    .hero{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:44px;
+      align-items:center;
+      padding:86px 0 66px;
+    }
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid rgba(255,138,61,.24);
+      background:rgba(255,138,61,.07);
+      color:#ffd5b5;
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:.86rem;
+      font-weight:800;
+    }
+    h1{
+      margin:18px 0 16px;
+      font-size:clamp(2.7rem,7vw,5.6rem);
+      line-height:.94;
+      letter-spacing:-.055em;
+    }
+    .accent{
+      background:linear-gradient(90deg,var(--orange),var(--gold),#f1a26b);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .hero p{
+      color:var(--muted);
+      max-width:760px;
+      line-height:1.78;
+      font-size:1.07rem;
+    }
+    .chips{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0}
+    .chip{
+      padding:10px 13px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.045);
+      color:#dbe4ea;
+      font-size:.9rem;
+    }
+
+    .hero-art{
+      position:relative;
+      min-height:390px;
+      border-radius:28px;
+      border:1px solid var(--line);
+      background:
+        linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.02)),
+        radial-gradient(circle at 50% 50%, rgba(255,138,61,.12), transparent 45%);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      display:grid;
+      place-items:center;
+    }
+    .ring{
+      width:230px;height:230px;border-radius:50%;
+      border:16px solid rgba(141,160,179,.28);
+      position:relative;
+      animation:rotate 14s linear infinite;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
+    }
+    .ring::before,.ring::after{
+      content:"";
+      position:absolute;
+      inset:22px;
+      border-radius:50%;
+      border:3px dashed rgba(245,196,81,.55);
+    }
+    .ring::after{
+      inset:58px;
+      border:2px solid rgba(103,217,232,.42);
+    }
+    .core{
+      position:absolute;
+      width:128px;height:128px;border-radius:50%;
+      display:grid;place-items:center;
+      background:linear-gradient(145deg,#27313d,#11161d);
+      border:1px solid var(--line);
+      font-weight:900;
+      font-size:2.2rem;
+      letter-spacing:-.05em;
+      color:#f7e7d4;
+      box-shadow:0 0 40px rgba(255,138,61,.14);
+    }
+    .spark{
+      position:absolute;
+      width:10px;height:10px;border-radius:50%;
+      background:var(--orange);
+      box-shadow:0 0 18px var(--orange);
+      animation:pulse 2.4s ease-in-out infinite;
+    }
+    .s1{top:48px;left:62px}.s2{right:58px;top:94px;animation-delay:.7s}.s3{left:50%;bottom:42px;animation-delay:1.2s}
+    .tag{
+      position:absolute;
+      padding:8px 11px;
+      font-size:.78rem;
+      border-radius:10px;
+      border:1px solid var(--line);
+      background:rgba(10,13,18,.82);
+      color:#dce3e8;
+      backdrop-filter:blur(8px);
+      animation:float 4.8s ease-in-out infinite;
+    }
+    .tag.a{left:18px;top:22px}.tag.b{right:18px;top:42px;animation-delay:.8s}.tag.c{right:22px;bottom:28px;animation-delay:1.4s}
+    @keyframes rotate{to{transform:rotate(360deg)}}
+    @keyframes pulse{50%{transform:scale(1.7);opacity:.45}}
+    @keyframes float{50%{translate:0 -7px}}
+
+    section{padding:66px 0}
+    .section-head{
+      display:flex;align-items:end;justify-content:space-between;
+      gap:24px;margin-bottom:26px
+    }
+    .section-head h2{margin:0;font-size:clamp(1.9rem,4vw,3rem);letter-spacing:-.035em}
+    .section-head p{margin:0;max-width:650px;color:var(--muted);line-height:1.65}
+
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .stat{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.045);
+      border-radius:20px;
+      padding:20px;
+      text-align:center;
+    }
+    .stat strong{display:block;font-size:2rem;color:var(--gold)}
+    .stat span{font-size:.9rem;color:var(--muted)}
+
+    .timeline{position:relative}
+    .timeline::before{
+      content:"";position:absolute;left:14px;top:4px;bottom:4px;width:2px;
+      background:linear-gradient(var(--orange),var(--gold),var(--cyan),var(--green));
+    }
+    .item{position:relative;padding-left:46px;margin-bottom:24px}
+    .dot{
+      position:absolute;left:4px;top:3px;width:22px;height:22px;border-radius:50%;
+      background:#111821;border:5px solid var(--orange);
+      box-shadow:0 0 0 4px rgba(255,138,61,.08);
+    }
+    .item h3{margin:0 0 6px}
+    .item p{margin:0;color:var(--muted);line-height:1.65}
+
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{
+      position:relative;
+      padding:22px;
+      border-radius:22px;
+      border:1px solid var(--line);
+      background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.025));
+      overflow:hidden;
+      transition:.25s ease;
+    }
+    .card::before{
+      content:"";
+      position:absolute;inset:0 auto auto 0;width:100%;height:2px;
+      background:linear-gradient(90deg,var(--orange),var(--gold),transparent);
+      opacity:.78;
+    }
+    .card:hover{transform:translateY(-5px);border-color:rgba(255,138,61,.25)}
+    .icon{
+      width:42px;height:42px;border-radius:13px;display:grid;place-items:center;
+      background:linear-gradient(145deg,rgba(255,138,61,.16),rgba(103,217,232,.10));
+      border:1px solid var(--line);
+      color:#ffe6d1;font-weight:900;
+    }
+    .card h3{margin:10px 0 8px;font-size:1.07rem}
+    .card p{margin:0;color:var(--muted);line-height:1.62;font-size:.94rem}
+
+    .project-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .project{
+      border:1px solid var(--line);
+      background:
+        radial-gradient(circle at 90% 10%, rgba(245,196,81,.08), transparent 30%),
+        linear-gradient(145deg,rgba(255,138,61,.08),rgba(255,255,255,.025));
+      border-radius:24px;
+      padding:24px;
+      position:relative;
+      overflow:hidden;
+    }
+    .project h3{margin:0 0 8px}
+    .project p{color:var(--muted);line-height:1.66}
+    .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+    .mini{
+      padding:7px 9px;border-radius:999px;border:1px solid var(--line);
+      background:rgba(255,255,255,.04);font-size:.78rem;color:#e4eaee
+    }
+
+    .skills{display:flex;gap:10px;flex-wrap:wrap}
+    .skill{
+      padding:10px 13px;border-radius:12px;border:1px solid var(--line);
+      background:rgba(255,255,255,.045);color:#dde5ea;font-size:.9rem
+    }
+
+    .code{
+      background:#080b10;
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:20px;
+      overflow:auto;
+      color:#d9edf2;
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+      line-height:1.7;
+      font-size:.92rem;
+    }
+
+    footer{
+      margin-top:26px;
+      padding:36px 0 50px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+    }
+    .footer-row{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+
+    .reveal{opacity:0;transform:translateY(22px);transition:.7s ease}
+    .reveal.visible{opacity:1;transform:none}
+
+    @media(max-width:900px){
+      .hero{grid-template-columns:1fr;padding-top:60px}
+      .hero-art{min-height:320px}
+      .grid{grid-template-columns:1fr 1fr}
+      .stats{grid-template-columns:1fr 1fr}
+      .project-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:620px){
+      .nav-links{display:none}
+      .hero{padding:48px 0 34px;gap:28px}
+      h1{font-size:clamp(2.8rem,16vw,4.4rem)}
+      .hero-art{min-height:270px}
+      .ring{width:175px;height:175px}
+      .core{width:100px;height:100px;font-size:1.8rem}
+      .grid,.stats{grid-template-columns:1fr}
+      section{padding:48px 0}
+      .section-head{display:block}
+      .section-head p{margin-top:10px}
+      .tag{font-size:.7rem}
+      .tag.a{left:12px}.tag.b{right:12px}.tag.c{right:12px}
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <div class="brand">METALLURGY<span>.PORTFOLIO</span></div>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#training">Training</a>
+        <a href="#work">Applied Work</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="wrap hero">
+      <div class="reveal">
+        <span class="kicker">⚙ Metallurgical Engineering • Fresher Portfolio</span>
+        <h1>Hello, I'm <span class="accent" id="studentNameHero">Student Name</span></h1>
+        <p>
+          A 2nd-year Metallurgical Engineering student with practical exposure to MATLAB through a two-week internship at
+          Ardent Computech Pvt. Ltd. The training focused on engineering calculations, material data analysis, hardness studies,
+          alloy composition, heat-treatment calculations, cooling-curve analysis, numerical methods, coding practice and technical visualization.
+        </p>
+
+        <div class="chips">
+          <span class="chip">2nd Year • 4th Semester</span>
+          <span class="chip">2-Week MATLAB Internship</span>
+          <span class="chip">Ardent Computech Pvt. Ltd.</span>
+        </div>
+      </div>
+
+      <div class="hero-art reveal">
+        <span class="tag a">Hardness Analysis</span>
+        <span class="tag b">Cooling Curves</span>
+        <span class="tag c">Heat Treatment</span>
+        <span class="spark s1"></span>
+        <span class="spark s2"></span>
+        <span class="spark s3"></span>
+        <div class="ring"></div>
+        <div class="core">MET</div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2>Professional Snapshot</h2>
+          <p>Focused on material calculations, engineering data, graphical analysis, numerical problem solving and practical MATLAB usage.</p>
+        </div>
+
+        <div class="stats reveal">
+          <div class="stat"><strong>2</strong><span>Weeks of Internship Training</span></div>
+          <div class="stat"><strong>12</strong><span>Structured Training Days</span></div>
+          <div class="stat"><strong>8+</strong><span>Applied Coding Topics</span></div>
+          <div class="stat"><strong>4+</strong><span>Mini Projects & Analyses</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="training">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2>MATLAB Training Journey</h2>
+          <p>The internship moved from programming basics to metallurgy-focused calculations, data analysis and engineering visualization.</p>
+        </div>
+
+        <div class="timeline reveal">
+          <div class="item"><span class="dot"></span><h3>MATLAB Fundamentals</h3><p>Interface, variables, data types, class(), who(), whos(), clc, clear and basic operators.</p></div>
+          <div class="item"><span class="dot"></span><h3>Programming Logic</h3><p>Input/output, if, if-else, elseif, switch, for loops, while loops and user-defined functions.</p></div>
+          <div class="item"><span class="dot"></span><h3>Built-in Functions & Arrays</h3><p>Worked with abs(), round(), floor(), max(), min(), sum(), mean(), arrays, matrices, indexing and matrix operations.</p></div>
+          <div class="item"><span class="dot"></span><h3>Engineering Plots</h3><p>Created plots using plot(), subplot(), labels, titles, legends, grids and visual comparisons of material data.</p></div>
+          <div class="item"><span class="dot"></span><h3>Metallurgy Calculations</h3><p>Density, mass, volume, material density database, binary and ternary alloy composition, weight percentage and mass percentage.</p></div>
+          <div class="item"><span class="dot"></span><h3>Heat Treatment & Cooling Analysis</h3><p>Heating time, cooling time, temperature conversion, heat-treatment schedules, cooling curves and peak-based interpretation.</p></div>
+          <div class="item"><span class="dot"></span><h3>Hardness & Numerical Methods</h3><p>Mean, median, standard deviation, histogram, heat conduction, numerical integration, root finding and interpolation.</p></div>
+          <div class="item"><span class="dot"></span><h3>Data Analysis & Reporting</h3><p>Worked with structured metallurgical data, filtering, graph analysis, interpretation and concise report generation.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2>Applied Coding & Visual Work</h2>
+          <p>Hands-on exercises combined metallurgy concepts with MATLAB calculations and clear technical diagrams.</p>
+        </div>
+
+        <div class="grid">
+          <article class="card reveal"><div class="icon">ρ</div><h3>Density, Mass & Volume Calculator</h3><p>Calculated material density, mass and volume and created a simple material density database for steel, copper and aluminium.</p></article>
+          <article class="card reveal"><div class="icon">%</div><h3>Alloy Composition Calculator</h3><p>Practiced weight percentage, mass percentage, binary alloy and ternary alloy calculations.</p></article>
+          <article class="card reveal"><div class="icon">HT</div><h3>Heat-Treatment Calculations</h3><p>Worked with heating time, cooling time, temperature conversion and basic heat-treatment scheduling.</p></article>
+          <article class="card reveal"><div class="icon">CC</div><h3>Cooling Curve Analysis</h3><p>Plotted temperature versus time, studied cooling behaviour and interpreted important changes in the curve.</p></article>
+          <article class="card reveal"><div class="icon">HV</div><h3>Hardness Data Analysis</h3><p>Calculated mean, median, standard deviation, minimum, maximum and visualized hardness distribution using plots and histograms.</p></article>
+          <article class="card reveal"><div class="icon">Q</div><h3>Heat Conduction</h3><p>Applied basic heat-transfer equations and plotted temperature distribution through a material section.</p></article>
+          <article class="card reveal"><div class="icon">∫</div><h3>Numerical Integration</h3><p>Used numerical methods to estimate area under a heating or cooling curve and interpret thermal exposure.</p></article>
+          <article class="card reveal"><div class="icon">ƒ</div><h3>Root Finding & Interpolation</h3><p>Estimated unknown values between known data points and solved simple engineering equations numerically.</p></article>
+          <article class="card reveal"><div class="icon">GR</div><h3>Graph-Based Metallurgical Analysis</h3><p>Compared temperature, hardness and defect-related values using line plots, bar charts, histograms and subplots.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2>Mini Projects</h2>
+          <p>Projects were designed to combine coding, engineering interpretation and report-ready visualization.</p>
+        </div>
+
+        <div class="project-grid">
+          <article class="project reveal">
+            <h3>Hardness Data Analysis Using MATLAB</h3>
+            <p>Analyzed sample hardness values using mean, median, standard deviation, minimum, maximum, line plots and histograms to understand variation and consistency.</p>
+            <div class="tags"><span class="mini">Hardness</span><span class="mini">Statistics</span><span class="mini">Histogram</span></div>
+          </article>
+
+          <article class="project reveal">
+            <h3>Heat-Treatment Quality Analysis</h3>
+            <p>Compared treatment temperature, hardness and defect data to identify a suitable process condition through calculations and visual analysis.</p>
+            <div class="tags"><span class="mini">Heat Treatment</span><span class="mini">Data Analysis</span><span class="mini">Plots</span></div>
+          </article>
+
+          <article class="project reveal">
+            <h3>Cooling Curve & Thermal Behaviour</h3>
+            <p>Plotted a metal cooling curve, calculated cooling rate and interpreted how temperature changes with time during cooling.</p>
+            <div class="tags"><span class="mini">Cooling Curve</span><span class="mini">Thermal Analysis</span><span class="mini">MATLAB</span></div>
+          </article>
+
+          <article class="project reveal">
+            <h3>Alloy Composition Calculator</h3>
+            <p>Built simple calculations for binary and ternary alloy composition, mass percentage and weight percentage to support material preparation problems.</p>
+            <div class="tags"><span class="mini">Alloys</span><span class="mini">Composition</span><span class="mini">Engineering Math</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2>Technical Skills</h2>
+          <p>Skills developed through repeated coding practice, numerical exercises, plotting and material-data interpretation.</p>
+        </div>
+
+        <div class="skills reveal">
+          <span class="skill">MATLAB</span>
+          <span class="skill">Engineering Calculations</span>
+          <span class="skill">Arrays & Matrices</span>
+          <span class="skill">Functions & Loops</span>
+          <span class="skill">Data Filtering</span>
+          <span class="skill">Statistical Analysis</span>
+          <span class="skill">Hardness Analysis</span>
+          <span class="skill">Heat Treatment</span>
+          <span class="skill">Cooling Curves</span>
+          <span class="skill">Alloy Composition</span>
+          <span class="skill">Heat Conduction</span>
+          <span class="skill">Numerical Integration</span>
+          <span class="skill">Root Finding</span>
+          <span class="skill">Interpolation</span>
+          <span class="skill">Technical Plotting</span>
+          <span class="skill">Problem Solving</span>
+          <span class="skill">Report Visualization</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2>Learning Outcome</h2>
+          <p>The training helped connect metallurgy theory with numerical analysis and clear engineering visuals.</p>
+        </div>
+
+        <div class="grid">
+          <article class="card reveal"><div class="icon">01</div><h3>Stronger Analytical Thinking</h3><p>Improved confidence in solving material-related numerical problems using structured MATLAB code.</p></article>
+          <article class="card reveal"><div class="icon">02</div><h3>Better Data Interpretation</h3><p>Learned how to convert raw values into meaningful statistics, graphs and engineering conclusions.</p></article>
+          <article class="card reveal"><div class="icon">03</div><h3>Career Readiness</h3><p>Built practical confidence for future laboratory work, projects, higher studies and fresher technical interviews.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2>Quick Metallurgy Reference</h2>
+          <p>Important concepts repeatedly used during practical exercises.</p>
+        </div>
+
+        <div class="code reveal">
+Density = Mass / Volume
+Mass = Density × Volume
+Volume = Mass / Density
+
+Mean = Average of observations
+Median = Middle value
+Range = Maximum − Minimum
+Standard Deviation = Spread of data
+
+Binary Alloy = 2 components
+Ternary Alloy = 3 components
+
+Heat Treatment = Heating → Holding → Cooling
+Cooling Curve = Temperature vs Time
+
+MATLAB Functions:
+mean()  median()  std()  min()  max()
+plot()  histogram()  interp1()  trapz()  fzero()
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-row">
+      <div><strong id="studentNameFooter">Student Name</strong> • Metallurgical Engineering Portfolio</div>
+      <div>2nd Year • 4th Semester • MATLAB Internship at Ardent Computech Pvt. Ltd.</div>
+    </div>
+  </footer>
+
+  <script>
+    const STUDENT_NAME = "Student Name";
+
+    document.getElementById("studentNameHero").textContent = STUDENT_NAME;
+    document.getElementById("studentNameFooter").textContent = STUDENT_NAME;
+    document.title = `${STUDENT_NAME} | Metallurgy Engineering Portfolio`;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add("visible");
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+
+    const nav = document.querySelector(".nav");
+    window.addEventListener("scroll", () => {
+      nav.style.boxShadow = window.scrollY > 20 ? "0 10px 30px rgba(0,0,0,.18)" : "none";
+    });
+  </script>
+</body>
+</html>
